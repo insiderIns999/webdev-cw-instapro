@@ -68,6 +68,7 @@ export function uploadImage({ file }) {
     return response.json();
   });
 }
+
 /*
 export function onAddPostClick({ description, imageUrl }) {
   addPost({ token: getToken(), description, imageUrl })
