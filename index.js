@@ -19,6 +19,9 @@ import {
 export let user = getUserFromLocalStorage();
 export let page = null;
 export let posts = [];
+export const updatePosts = newPosts => {
+  posts = newPosts;
+}
 
 const getToken = () => {
   const token = user ? `Bearer ${user.token}` : undefined;

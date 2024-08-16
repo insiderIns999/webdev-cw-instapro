@@ -1,8 +1,6 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage } from "../index.js";
-
-let posts = [];
+import { posts, updatePosts, goToPage } from "../index.js";
 
 export function renderPostsPageComponent({ appEl }) {
   // TODO: реализовать рендер постов из api
@@ -38,7 +36,7 @@ export function renderPostsPageComponent({ appEl }) {
           <img src="./assets/images/like-active.svg">
         </button>
         <p class="post-likes-text">
-          Нравится: <strong>${post.(likes.length)}</strong>
+          Нравится: <strong>0</strong>
         </p>
       </div>
       <p class="post-text">
@@ -111,6 +109,8 @@ export function renderPostsPageComponent({ appEl }) {
 */
 
   appEl.innerHTML = appHtml;
+
+  updatePosts(posts);
 
   renderHeaderComponent({
     element: document.querySelector(".header-container"),
