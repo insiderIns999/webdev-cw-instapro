@@ -1,4 +1,5 @@
 import { renderUploadImageComponent } from "./upload-image-component.js";
+import { imageUrl, changeImageUrl } from "./upload-image-component.js";
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   const render = () => {
@@ -9,7 +10,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
         <div class="form">
             <h3 class="form-title">Добавить пост</h3>
             <div class="form-inputs">
-                <div class="upload-image-container">
+                <div id="imageEl" class="upload-image-container">
                     <div class="upload=image">
                         <div class="file-upload-image-container">
                             <img class="file-upload-image" />
@@ -34,13 +35,16 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
     appEl.innerHTML = appHtml;
 
+    
+    const opisImg = document.getElementById('desc-photo');
+
     const uploadImageContainer = appEl.querySelector('.upload-image-container');
     renderUploadImageComponent({ element: uploadImageContainer, onImageUrlChange: () => {} });
 
     document.getElementById("add-button").addEventListener("click", () => {
       onAddPostClick({
-        description: "Описание картинки",
-        imageUrl: "https://image.png",
+        description: opisImg.value,
+        imageUrl: changeImageUrl(imageUrl),
       });
     });
   };

@@ -1,3 +1,4 @@
+import { posts, updatePosts } from './index.js';
 // Замени на свой, чтобы получить независимый от других набор данных.
 // "боевая" версия инстапро лежит в ключе prod
 const personalKey = "prod";
@@ -69,13 +70,11 @@ export function uploadImage({ file }) {
   });
 }
 
-/*
 export function onAddPostClick({ description, imageUrl }) {
   addPost({ token: getToken(), description, imageUrl })
       .then(newPosts => {
-          updatePosts(newPosts)
-          renderApp()
+          updatePosts(newPosts);
+          renderApp();
       })
       .then(() => goToPage(POSTS_PAGE))
-},
-*/
+};

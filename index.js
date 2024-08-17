@@ -1,4 +1,4 @@
-import { getPosts } from "./api.js";
+import { getPosts, onAddPostClick } from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
 import {
@@ -15,6 +15,7 @@ import {
   removeUserFromLocalStorage,
   saveUserToLocalStorage,
 } from "./helpers.js";
+import { renderUploadImageComponent } from './components/upload-image-component.js';
 
 export let user = getUserFromLocalStorage();
 export let page = null;

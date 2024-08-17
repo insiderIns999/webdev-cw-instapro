@@ -1,8 +1,13 @@
 import { uploadImage } from "../api.js";
 
-export function renderUploadImageComponent({ element, onImageUrlChange }) {
-  let imageUrl = "";
+export let imageUrl = "";
+export let changeImageUrl = (newImageUrl) => {
+  imageUrl = newImageUrl;
+};
 
+export function renderUploadImageComponent({ onImageUrlChange }) {
+
+  const element = document.getElementById('imageEl');
   const render = () => {
     element.innerHTML = `
   <div class="upload=image">
@@ -39,7 +44,7 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
         lableEl.textContent = "Загружаю файл...";
         uploadImage({ file }).then(({ fileUrl }) => {
           imageUrl = fileUrl;
-          //onImageUrlChange(imageUrl);
+          onImageUrlChange(imageUrl);
           render();
         });
       }
@@ -49,7 +54,7 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
       .querySelector(".file-upload-remove-button")
       ?.addEventListener("click", () => {
         imageUrl = "";
-        //onImageUrlChange(imageUrl);
+        onImageUrlChange(imageUrl);
         render();
       });
   };
