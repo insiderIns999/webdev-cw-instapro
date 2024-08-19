@@ -115,7 +115,7 @@ const renderApp = () => {
       appEl,
       onAddPostClick({ description, imageUrl }) {
         // TODO: реализовать добавление поста в API
-        renderUploadImageComponent({ onImageUrlChange });
+        //renderUploadImageComponent({ onImageUrlChange });
         console.log("Добавляю пост...", { description, imageUrl });
         goToPage(POSTS_PAGE);
       },
