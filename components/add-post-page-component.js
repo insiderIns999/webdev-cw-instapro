@@ -1,6 +1,9 @@
 import { renderUploadImageComponent } from "./upload-image-component.js";
-//import { renderPostsPageComponent } from "./posts-page-component.js";
-import { updatePosts } from "../index.js";
+import { posts, updatePosts } from "../index.js";
+import { renderPostsPageComponent } from "./posts-page-component.js";
+//import { personalKey, baseHost, postsHost } from "../api.js";
+
+
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
@@ -42,7 +45,6 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
     appEl.innerHTML = appHtml;
 
-    
     const opisImg = document.getElementById('desc-photo');
 
     const uploadImageContainer = appEl.querySelector('.upload-image-container');
@@ -53,6 +55,8 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
         description: opisImg.value,
         imageUrl,
       });
+      renderPostsPageComponent();
+      updatePosts({ posts });
     });
   };
 

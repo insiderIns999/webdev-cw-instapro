@@ -24,10 +24,14 @@ export const updatePosts = newPosts => {
   posts = newPosts;
 }
 
-const getToken = () => {
+export const getToken = () => {
   const token = user ? `Bearer ${user.token}` : undefined;
   return token;
 };
+
+export const updateToken = (newToken) => {
+  token = newToken;
+}
 
 export const logout = () => {
   user = null;
@@ -115,7 +119,6 @@ const renderApp = () => {
       appEl,
       onAddPostClick({ description, imageUrl }) {
         // TODO: реализовать добавление поста в API
-        //renderUploadImageComponent({ onImageUrlChange });
         console.log("Добавляю пост...", { description, imageUrl });
         goToPage(POSTS_PAGE);
       },
