@@ -1,4 +1,4 @@
-import { posts, updatePosts } from './index.js';
+import { getToken } from "./index.js";
 // Замени на свой, чтобы получить независимый от других набор данных.
 // "боевая" версия инстапро лежит в ключе prod
 export const personalKey = "prod";
@@ -70,11 +70,35 @@ export function uploadImage({ file }) {
   });
 }
 
+export function addPost({ description, imageUrl }) {
+  return fetch(postsHost, {
+    method: "POST",
+    body: JSON.stringify({
+      description: description,
+      imageUrl: imageUrl,
+    }),
+    headers: {
+      Authorization: getToken(),
+    },
+  })
+    .then((response) => {
+      if (response.status === 401) {
+        throw new Error("Нет авторизации");
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+      return data.posts;
+    });
+}
+/*
 export function onAddPostClick({ description, imageUrl }) {
-  addPost({ token: getToken(), description, imageUrl })
+  addPost({ token: getToken(), description:  opisImg.value, imageUrl })
       .then(newPosts => {
           updatePosts(newPosts);
           renderApp();
       })
       .then(() => goToPage(POSTS_PAGE))
 };
+*/

@@ -1,9 +1,6 @@
 import { renderUploadImageComponent } from "./upload-image-component.js";
-import { posts, updatePosts } from "../index.js";
-import { renderPostsPageComponent } from "./posts-page-component.js";
-//import { personalKey, baseHost, postsHost } from "../api.js";
-
-
+import { getPosts } from "../api.js";
+import { getToken } from "../index.js";
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
@@ -53,10 +50,8 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     document.getElementById("add-button").addEventListener("click", () => {
       onAddPostClick({
         description: opisImg.value,
-        imageUrl,
+        imageUrl: imageUrl,
       });
-      renderPostsPageComponent();
-      updatePosts({ posts });
     });
   };
 
