@@ -1,6 +1,4 @@
 import { renderUploadImageComponent } from "./upload-image-component.js";
-import { getPosts } from "../api.js";
-import { getToken } from "../index.js";
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 

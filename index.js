@@ -118,7 +118,6 @@ const renderApp = () => {
     return renderAddPostPageComponent({
       appEl,
       onAddPostClick({ description, imageUrl }) {
-        // TODO: реализовать добавление поста в API
         const opisImg = document.getElementById('desc-photo');
         addPost({ token: getToken(), description:  opisImg.value, imageUrl })
         getPosts({ token: getToken() });
