@@ -1,7 +1,7 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, updatePosts, goToPage } from "../index.js";
-import { formatDistanceToNow } from 'date-fns';
+import { posts, updatePosts, goToPage } from "../main.js";
+import { formatDistanceToNow } from "date-fns";
 
 export function renderPostsPageComponent({ appEl }) {
   console.log("Актуальный список постов:", posts);
@@ -19,15 +19,18 @@ export function renderPostsPageComponent({ appEl }) {
   // Нравиться: 2
 
   // post date 19 минут назад
-  
-  const appHtml = posts.map((post) => {
-    return `
+
+  const appHtml = posts
+    .map((post) => {
+      return `
     <div class="page-container">
       <div class="header-container"></div>
       <ul id="li-posts" class="posts">
           <li class="post">
             <div class="post-header" data-user-id="${post.user.id}">
-                <img src="${post.user.imageUrl}" class="post-header__user-image">
+                <img src="${
+                  post.user.imageUrl
+                }" class="post-header__user-image">
                 <p class="post-header__user-name">${post.user.name}</p>
             </div>
             <div class="post-image-container">
@@ -51,8 +54,9 @@ export function renderPostsPageComponent({ appEl }) {
           </li>
         </ul>
       </div>
-    `; 
-  }).join('');
+    `;
+    })
+    .join("");
 
   appEl.innerHTML = appHtml;
 

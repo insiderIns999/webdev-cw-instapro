@@ -1,4 +1,4 @@
-import { getToken } from "./index.js";
+import { getToken } from "./main.js";
 // Замени на свой, чтобы получить независимый от других набор данных.
 // "боевая" версия инстапро лежит в ключе prod
 export const personalKey = "prod";
@@ -95,4 +95,32 @@ export function addPost({ description, imageUrl }) {
     .then((data) => {
       return data.posts;
     });
+}
+
+// Добавление лайков
+export function addLikes() {
+  const likesElements = document.querySelectorAll(".like-button");
+  likesElements.forEach((likeElement, index) => {
+    likeElement.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      if (token === null) {
+        return alert("Авторизуйтесь, чтобы добавлять лайки");
+      } else {
+        /*
+        likeElement.classList.add("-loading-like");
+        delay(2000).then(() => {
+          comments[index].isLiked
+            ? --comments[index].likes
+            : ++comments[index].likes;
+          comments[index].isLiked = !comments[index].isLiked;
+          comments[index].isLikeLoading = false;
+          buttonElement.classList.remove("-loading-like");
+
+          addLikes();
+          */
+        });
+      }
+    });
+  });
 }
