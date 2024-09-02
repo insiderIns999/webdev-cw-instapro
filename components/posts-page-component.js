@@ -37,7 +37,7 @@ export function renderPostsPageComponent({ appEl }) {
               <img class="post-image" src="${post.imageUrl}">
             </div>
             <div class="post-likes">
-              <button data-post-id="${post.id}" class="like-button">
+              <button data-post-id="${post.id}" class="like-button ${post.isLiked ? '-active-like' : ''}">
                 <img src="./assets/images/like-active.svg">
               </button>
               <p class="post-likes-text">
