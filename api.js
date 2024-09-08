@@ -102,7 +102,7 @@ export function addPost({ description, imageUrl }) {
 export const countLikes = 0;
 export function addLikes({ token }) {
   const likesElements = document.querySelectorAll(".like-button");
-  likesElements.forEach((likeElement, index) => {
+  likesElements.forEach((likeElement, id) => {
     likeElement.addEventListener("click", (event) => {
       event.stopPropagation();
 
