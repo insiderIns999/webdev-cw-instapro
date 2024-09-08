@@ -99,7 +99,7 @@ export function addPost({ description, imageUrl }) {
 }
 
 // Добавление лайков
-export function addLikes() {
+export function addLikes({ token }) {
   const likesElements = document.querySelectorAll(".like-button");
   likesElements.forEach((likeElement, index) => {
     likeElement.addEventListener("click", (event) => {
@@ -115,8 +115,6 @@ export function addLikes() {
           posts[id].isLiked = !posts[id].isLiked;
           posts[id].isLikeLoading = false;
         buttonElement.classList.remove("-loading-like");
-
-        addLikes();
       }
     });
   });

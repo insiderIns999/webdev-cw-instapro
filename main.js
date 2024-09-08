@@ -61,13 +61,13 @@ export const goToPage = (newPage, data) => {
     if (newPage === POSTS_PAGE) {
       page = LOADING_PAGE;
       renderApp();
-
+      addLikes({ token: getToken() });
       return getPosts({ token: getToken() })
         .then((newPosts) => {
           page = POSTS_PAGE;
           posts = newPosts;
           renderApp();
-          addLikes();
+          //addLikes();
         })
         .catch((error) => {
           console.error(error);
