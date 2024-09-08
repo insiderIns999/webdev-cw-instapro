@@ -2,6 +2,7 @@ import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, updatePosts, goToPage } from "../main.js";
 import { formatDistanceToNow } from "date-fns";
+import { countLikes } from './api.js';
 
 export function renderPostsPageComponent({ appEl }) {
   console.log("Актуальный список постов:", posts);
@@ -37,11 +38,11 @@ export function renderPostsPageComponent({ appEl }) {
               <img class="post-image" src="${post.imageUrl}">
             </div>
             <div class="post-likes">
-              <button data-post-id="${post.id}" class="like-button ${post.isLiked ? '-active-like' : ''}">
+              <button data-post-id="${post.id}" class="like-button">
                 <img src="./assets/images/like-active.svg">
               </button>
               <p class="post-likes-text">
-                Нравится: <strong>0</strong>
+                Нравится: <strong>${countLikes}</strong>
               </p>
             </div>
             <p class="post-text">

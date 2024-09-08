@@ -99,6 +99,7 @@ export function addPost({ description, imageUrl }) {
 }
 
 // Добавление лайков
+export const countLikes = 0;
 export function addLikes({ token }) {
   const likesElements = document.querySelectorAll(".like-button");
   likesElements.forEach((likeElement, index) => {
@@ -108,13 +109,16 @@ export function addLikes({ token }) {
       if (token === null) {
         return alert("Авторизуйтесь, чтобы добавлять лайки");
       } else {
-        likeElement.classList.add("-loading-like");
-        posts[id].isLiked
-          ? --posts[id].likes
-          : ++posts[id].likes;
-          posts[id].isLiked = !posts[id].isLiked;
-          posts[id].isLikeLoading = false;
-        buttonElement.classList.remove("-loading-like");
+        if (posts[id].isLiked) {
+          ++posts[id].likes;
+          ++countLikes;
+        }
+        else {
+          --posts[id].likes;
+          --countLikes;
+        }
+        posts[id].isLiked = !posts[id].isLiked;
+        posts[id].isLikeLoading = false;
       }
     });
   });
