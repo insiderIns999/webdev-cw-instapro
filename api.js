@@ -100,10 +100,9 @@ export function addPost({ description, imageUrl }) {
 }
 
 // Добавление лайков
-export let countLikes = 0;
 export function addLikes({ token, postId }) {
   const likesElements = document.querySelectorAll(".like-button");
-  likesElements.forEach((likeElement, postId) => {
+  likesElements.forEach((likeElement) => {
     likeElement.addEventListener("click", (event) => {
       event.stopPropagation();
       if (token === null) {
@@ -124,7 +123,6 @@ export function addLikes({ token, postId }) {
             return response.json();
           })
           .then((data) => {
-            ++countLikes;
             return data.posts;
           });
         /*

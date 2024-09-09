@@ -42,11 +42,11 @@ export function renderPostsPageComponent({ appEl }) {
                 <img src="./assets/images/like-active.svg">
               </button>
               <p class="post-likes-text">
-                Нравится: <strong>${countLikes}</strong>
+                Нравится: <strong>${post.user.name}</strong>
               </p>
             </div>
             <p class="post-text">
-              <span class="user-name">${post.user.name}</span>
+              <span class="user-name">${post.likes.name}</span>
               ${post.description}.
             </p>
             <p class="post-date">

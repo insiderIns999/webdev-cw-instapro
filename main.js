@@ -67,7 +67,7 @@ export const goToPage = (newPage, data) => {
           posts = newPosts;
           renderApp();
           const postId = data.posts.id;
-          addLikes({ token: getToken(), postId });
+          addLikes({ token: getToken(), postId: postId });
           getPosts({ token: getToken() });
         })
         .catch((error) => {
