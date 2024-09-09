@@ -5,6 +5,7 @@ import { posts } from "./main.js";
 export const personalKey = "prod";
 export const baseHost = "https://webdev-hw-api.vercel.app";
 export const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
+export const likesHost = `${posts[id]}/like`;
 
 //   Получение постов
 export function getPosts({ token }) {
@@ -99,26 +100,43 @@ export function addPost({ description, imageUrl }) {
 }
 
 // Добавление лайков
-export const countLikes = 0;
-export function addLikes({ token }) {
+export let countLikes = 0;
+export function addLikes({ token, postId }) {
   const likesElements = document.querySelectorAll(".like-button");
-  likesElements.forEach((likeElement, id) => {
+  likesElements.forEach((likeElement, postId) => {
     likeElement.addEventListener("click", (event) => {
       event.stopPropagation();
-
       if (token === null) {
         return alert("Авторизуйтесь, чтобы добавлять лайки");
       } else {
-        if (posts[id].isLiked) {
-          ++posts[id].likes;
+        
+        return fetch(likesHost, {
+          method: "POST",
+          body: JSON.stringify({
+            Id: postId,
+            isLiked: true,
+          }),
+          headers: {
+            Authorization: getToken(),
+          },
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            ++countLikes;
+            return data.posts;
+          });
+        /*
+        if (posts[postId].isLiked) {
+          ++posts[postId].likes;
           ++countLikes;
         }
         else {
-          --posts[id].likes;
+          --posts[postId].likes;
           --countLikes;
         }
-        posts[id].isLiked = !posts[id].isLiked;
-        posts[id].isLikeLoading = false;
+        */
       }
     });
   });
