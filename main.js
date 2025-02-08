@@ -1,4 +1,4 @@
-import { getPosts } from "./api.js";
+import { addLikes, getPosts } from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
 import {
@@ -15,15 +15,23 @@ import {
   removeUserFromLocalStorage,
   saveUserToLocalStorage,
 } from "./helpers.js";
+import { addPost } from './api.js';
 
 export let user = getUserFromLocalStorage();
 export let page = null;
 export let posts = [];
+export const updatePosts = newPosts => {
+  posts = newPosts;
+}
 
-const getToken = () => {
+export const getToken = () => {
   const token = user ? `Bearer ${user.token}` : undefined;
   return token;
 };
+
+export const updateToken = (newToken) => {
+  token = newToken;
+}
 
 export const logout = () => {
   user = null;
@@ -53,12 +61,14 @@ export const goToPage = (newPage, data) => {
     if (newPage === POSTS_PAGE) {
       page = LOADING_PAGE;
       renderApp();
-
       return getPosts({ token: getToken() })
         .then((newPosts) => {
           page = POSTS_PAGE;
           posts = newPosts;
           renderApp();
+          const postId = data.posts.id;
+          addLikes({ token: getToken(), postId: postId });
+          getPosts({ token: getToken() });
         })
         .catch((error) => {
           console.error(error);
@@ -110,8 +120,9 @@ const renderApp = () => {
     return renderAddPostPageComponent({
       appEl,
       onAddPostClick({ description, imageUrl }) {
-        // TODO: реализовать добавление поста в API
-        renderUploadImageComponent();
+        const opisImg = document.getElementById('desc-photo');
+        addPost({ token: getToken(), description:  opisImg.value, imageUrl })
+        getPosts({ token: getToken() });
         console.log("Добавляю пост...", { description, imageUrl });
         goToPage(POSTS_PAGE);
       },

@@ -1,9 +1,13 @@
+import { getToken } from "./main.js";
+import { posts } from "./main.js";
 // Замени на свой, чтобы получить независимый от других набор данных.
 // "боевая" версия инстапро лежит в ключе prod
-const personalKey = "prod";
-const baseHost = "https://webdev-hw-api.vercel.app";
-const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
+export const personalKey = "prod";
+export const baseHost = "https://webdev-hw-api.vercel.app";
+export const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
+export const likesHost = `${posts[id]}/like`;
 
+//   Получение постов
 export function getPosts({ token }) {
   return fetch(postsHost, {
     method: "GET",
@@ -23,6 +27,7 @@ export function getPosts({ token }) {
     });
 }
 
+//    Регистрация
 // https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
 export function registerUser({ login, password, name, imageUrl }) {
   return fetch(baseHost + "/api/user", {
@@ -41,6 +46,7 @@ export function registerUser({ login, password, name, imageUrl }) {
   });
 }
 
+//   Авторизация
 export function loginUser({ login, password }) {
   return fetch(baseHost + "/api/user/login", {
     method: "POST",
@@ -68,13 +74,68 @@ export function uploadImage({ file }) {
     return response.json();
   });
 }
-/*
-export function onAddPostClick({ description, imageUrl }) {
-  addPost({ token: getToken(), description, imageUrl })
-      .then(newPosts => {
-          updatePosts(newPosts)
-          renderApp()
-      })
-      .then(() => goToPage(POSTS_PAGE))
-},
-*/
+
+//    Добавление поста
+export function addPost({ description, imageUrl }) {
+  return fetch(postsHost, {
+    method: "POST",
+    body: JSON.stringify({
+      description: description,
+      imageUrl: imageUrl,
+    }),
+    headers: {
+      Authorization: getToken(),
+    },
+  })
+    .then((response) => {
+      if (response.status === 401) {
+        throw new Error("Нет авторизации");
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+      return data.posts;
+    });
+}
+
+// Добавление лайков
+export function addLikes({ token, postId }) {
+  const likesElements = document.querySelectorAll(".like-button");
+  likesElements.forEach((likeElement) => {
+    likeElement.addEventListener("click", (event) => {
+      event.stopPropagation();
+      if (token === null) {
+        return alert("Авторизуйтесь, чтобы добавлять лайки");
+      } else {
+        
+        return fetch(likesHost, {
+          method: "POST",
+          body: JSON.stringify({
+            Id: postId,
+            isLiked: true,
+          }),
+          headers: {
+            Authorization: getToken(),
+          },
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            return data.posts;
+          });
+        /*
+        if (posts[postId].isLiked) {
+          ++posts[postId].likes;
+          ++countLikes;
+        }
+        else {
+          --posts[postId].likes;
+          --countLikes;
+        }
+        */
+      }
+    });
+  });
+}
